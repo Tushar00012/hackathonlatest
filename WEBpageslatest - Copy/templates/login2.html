@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login-Page</title>
+    <link rel="shortcut icon"  href="{{ url_for('static', filename='images/logo.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById('password');
+            // var checkbox = document.getElementById('showPassword');
+
+            // passwordInput.type = checkbox.checked ? 'text' : 'password';
+        }
+    </script>
+    
+</head>
+<body>
+    
+    <div class="homebar">
+        <div class="heading">
+            <h1>
+                ASBC Bank
+            </h1>
+        </div>
+        <ul>
+            <li><a href="/index">Home</a></li>
+           <li><a href="">Accounts</a></li>
+           <li><a href="">Deposits</a></li>
+           <li><a href="">Payments</a></li>
+           <li><a href="">Cards</a></li>
+           <li><a href="">Loans</a></li>
+           <li><a href="">Investments</a></li>
+           <li><a href="">Insurance</a></li>
+           <li><a href="">Special Services</a></li>
+           
+           <li><button><a href="/login2" alt="login">Login</a></button></li>
+        </ul>
+    </div>
+    {% if error %}
+        <!-- Display an alert if an error message exists -->
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+    {% endif %}
+    <div>
+        <!-- <div class="heading">
+            <h1>
+                ASBC Bank
+            </h1>
+        </div> -->
+    
+        <center>
+        
+    <form class="forms" action="/login2" method="post">
+        <center>
+            <div class="logi">
+                <br><br><br>
+                <b class="log">Customer Login</b>
+                <br><br>
+                <label for="person_name">Customer Id:</label>
+                <input  type="text" id="person_name" name="person_name" placeholder="Customer Id" required>
+                <br><br>
+                <label for="email">Email Id :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="text" id="email" name="email" required>
+
+                <br><br>
+                <!-- <label for="name">Name : </label>
+                <input required type="text" id="name" placeholder="Username">
+                <br><br> -->
+                <label for="password">Password : &nbsp; 
+
+                    
+                </label>
+                <input required type="password" id="password" placeholder="Password">
+                <br><br>
+                <!-- <label for="call">Phone:</label>
+            
+                <input required type="tel" id="call" placeholder="Phone No.">
+                <br><br> -->
+                
+                <!-- <input type="submit" id="submit"> -->
+                <button class="Face" id="login" name="login"><b>Proceed</b></button>
+                <p>Don't have an account? <br><a style="text-decoration: none; color: rgb(0, 60, 255);" href="/register" target="_blank">Register</a></p>
+            </div>
+        </center>
+    </form>
+    
+    </div>
+    
+</body>
+<script type="module">
+    // Import Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword  } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+    import { getDatabase, set,ref,update } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+
+    // Your Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCfz9cWzB-q2sVxZQvxg2AdSmS-onQUm9I",
+        authDomain: "faces-38f82.firebaseapp.com",
+        databaseURL: "https://faces-38f82-default-rtdb.firebaseio.com",
+        projectId: "faces-38f82",
+        storageBucket: "faces-38f82.appspot.com",
+        messagingSenderId: "561665683184",
+        appId: "1:561665683184:web:62e1ea55549aef5bdcdc35",
+        measurementId: "G-PHWLRQ9GZN"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+
+    // Add event listener to the Sign Up button
+    document.getElementById('sign_up').addEventListener('click', async () => {
+        var email = document.getElementById('email').value;
+        var name = document.getElementById('name').value;
+        var date = document.getElementById('date').value;
+        var address = document.getElementById('address').value;
+        var password = document.getElementById('password').value;
+        var check1 = document.getElementById('check1').value;
+        var gender = document.getElementById('gender').value;
+        var person_name = document.getElementById('person_name').value;
+
+        try {
+            // Simulate server-side behavior (replace with actual Firebase code)
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+           
+            // Handle user creation success
+            const user = userCredential.user;
+            set(ref(database,'users/' + user.uid),{
+                
+                // name:name,
+                // email:email
+
+                name:name,
+                email:email,
+                gender:gender,
+                date:date,
+                address:address,
+                password:password,
+                check1:check1,
+                person_name:person_name,
+                image: imageUrl
+
+            })
+            alert('User created: ' + user.email);
+        } catch (error) {
+            // Handle errors
+            alert('Error: ' + error.message);
+        }
+    });
+
+    
+
+
+    
+    document.getElementById('login').addEventListener('click', async () => {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        try {
+            // Log in user
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+            // Handle user login success
+            const user = userCredential.user;
+            const dt = new Date();
+            update(ref(database, 'myForm/' + user.uid), {
+                last_login: dt,
+            });
+            alert('User logged in');
+        } catch (error) {
+            // Handle errors
+            alert('Error: ' + error.message);
+        }
+    });
+</script>
+<script>
+    // Check if there is a registration success message
+    var registrationSuccess = "{{ registration_success }}";
+    if (registrationSuccess) {
+        // Show the success popup
+        alert('Registration successful!');  // You can customize this to a more user-friendly popup
+    }
+</script>
+</html>

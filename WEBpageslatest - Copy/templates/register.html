@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylereg.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="shortcut icon"  href="{{ url_for('static', filename='images/logo.ico') }}" type="image/x-icon">
+</head>
+<body>
+    <div class="homebar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+           <li><a href="">Accounts</a></li>
+           <li><a href="">Deposits</a></li>
+           <li><a href="">Payments</a></li>
+           <li><a href="">Cards</a></li>
+           <li><a href="">Loans</a></li>
+           <li><a href="">Investments</a></li>
+
+           <li><a href="">Insurance</a></li>
+           <li><a href="">Special Services</a></li>
+           
+           
+           <li><button><a href="login2.html" alt="login">Login</a></button></li>
+        </ul>
+    </div>
+
+    <div class="register" action="">
+        
+        <form id="myForm" class="myForm" action="/register" method="post" onsubmit="submitform() ;return validateForm()" enctype="multipart/form-data">
+            
+            <div class="reg">
+                <table>
+                    <tbody>
+                        <tr>
+                            <label for="name">Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        </tr>
+                        <tr><input type="text" id="name" name="name"></tr>
+                    </tbody>
+                    <br><br>
+                    <tbody>
+                        <tr>
+                            <label for="person_name">Customer Id: &nbsp;</label>
+                        </tr>
+                        <tr><input type="text" id="person_name" name="person_name" value="{{ person_name }}" required></tr>
+                    </tbody>
+                    <br><br>
+                    <tbody>
+                        <tr><label for="password">Password :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></tr>
+                        <tr><input type="text" id="password" name="password" required></tr>
+                    </tbody>
+                    <br><br>
+                    <tbody>
+                        <tr><label for="date">Date of Birth :</label></tr>
+                        <tr><input type="date" id="date" name="date" required></tr>
+                    </tbody>
+                    <br><br>
+                    <tbody>
+                        <tr><label for="gender">Gender :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></tr>
+                        <tr>
+                            <select name="gender" id="gender" required>
+                            <option value="male">male</option>
+                            <option value="female">female</option>
+                            <option value="prefer not to say">prefer not to say</option>
+                            
+                            </select>
+                        </tr>
+                    </tbody>
+                    <br><br>
+                    <tbody>
+                        <tr><label for="email">Email Id :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></tr>
+                        <tr><input type="text" id="email" name="email" required></tr>
+                    </tbody>
+                    <br><br>
+                    <tbody>
+                        <tr><label for="address">Address :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></tr>
+                        <tr><textarea name="address" id="address" cols="30" rows="2" placeholder="Address" required></textarea></tr>
+                    </tbody>
+                </table>
+                
+               
+                <br><br>
+                <label for="file">Upload Photo :</label>
+                <p style="font-size: 15px; color: blue;" >*Image should be 216 X 216 pixels and should be of '.png' type.</p>
+                <!-- <input type="file" id="file"> -->
+                <input type="file" id="image" name="image" accept=".png" onchange="validateImage()">
+                <!-- <button type="submit" id="submitButton" disabled>Upload Image</button> -->
+                <br><br>
+                <input type="checkbox" id="check1" required>
+                <label for="check1" name="check1" style="font-size: 15px;">By clicking I hereby verify that all information added is correct and I agree to all terms and conditions.</label><br>
+                <br>
+                
+                <script>//har field bharna h
+                    function validateForm() {
+                        // Check if the form is valid before submission
+                        var form = document.forms[0];
+                        if (form.checkValidity()) {
+                            // If valid, submit the form
+                            return true;
+                        } else {
+                            // If not valid, display an alert (you can customize this part)
+                            alert("Please fill in all required fields.");
+                            return false;
+                        }
+                    }
+                </script>
+                
+                <!-- <button><a class="regi"  href="final.html" alt="final" target="_blank">REGISTER</a>
+                </button> -->
+                <center>
+                <!-- <a href="/final"><input type="submit" class="regi" value="REGISTER" ></a> -->
+                <button class="regi" id="register" >REGISTER</button>
+                </center>
+                <!-- <script>
+                    function validateForm() {
+                        // Check if the form is valid before submission
+                        var form = document.forms[0];
+                        if (form.checkValidity()) {
+                            // If valid, display the success message (you can customize this part)
+                            alert('Data Uploaded Successfully');
+                            return true;
+                        } else {
+                            // If not valid, display an alert (you can customize this part)
+                            alert("Please fill in all required fields.");
+                            return false;
+                        }
+                    }
+                </script> -->
+            </div>
+        
+        </form>
+        <script>//image 216x216 and png ki honi h
+            function validateImage() {
+                var input = document.getElementById('image');
+                var submitButton = document.getElementById('submitButton');
+        
+                if (input.files.length > 0) {
+                    var file = input.files[0];
+        
+                    // Check file type
+                    if (file.type !== 'image/png') {
+                        alert('Please select a PNG image.');
+                        input.value = ''; // Clear the input
+                        return;
+                    }
+        
+                    // Check image dimensions
+                    var img = new Image();
+                    img.src = window.URL.createObjectURL(file);
+                    
+                    img.onload = function() {
+                        if (img.width === 216 && img.height === 216) {
+                            submitButton.removeAttribute('disabled');
+                        } else {
+                            alert('Image dimensions should be 216 x 216 pixels.');
+                            input.value = ''; // Clear the input
+                            submitButton.setAttribute('disabled', 'disabled');
+                        }
+                    };
+                }
+            }
+        </script>
+    
+    </div>
+    
+</body>
+<script type="module">
+    // Import Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+    import { getDatabase, set,ref } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+    import { getStorage, ref as storageRef, uploadBytes } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js";
+    import { getDownloadURL } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js";
+
+
+    // Your Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCfz9cWzB-q2sVxZQvxg2AdSmS-onQUm9I",
+        authDomain: "faces-38f82.firebaseapp.com",
+        databaseURL: "https://faces-38f82-default-rtdb.firebaseio.com",
+        projectId: "faces-38f82",
+        storageBucket: "faces-38f82.appspot.com",
+        messagingSenderId: "561665683184",
+        appId: "1:561665683184:web:62e1ea55549aef5bdcdc35",
+        measurementId: "G-PHWLRQ9GZN"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+    const storage = getStorage(app);
+
+
+    // Add event listener to the Sign Up button
+    document.getElementById('register').addEventListener('click', async () => {
+        var email = document.getElementById('email').value;
+        var name = document.getElementById('name').value;
+        var date = document.getElementById('date').value;
+        var address = document.getElementById('address').value;
+        var password = document.getElementById('password').value;
+        var check1 = document.getElementById('check1').value;
+        var gender = document.getElementById('gender').value;
+        var person_name = document.getElementById('person_name').value;
+        const fileInput = event.target;
+        if (fileInput.files.length > 0) {
+            imageFile = fileInput.files[0];
+        }
+
+        try {
+            // Simulate server-side behavior (replace with actual Firebase code)
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            const imageRef = storageRef(storage, 'user_images/' + user.uid + '/' + imageFile.name);
+            await uploadBytes(imageRef, imageFile);
+
+            // Save user data including image URL to Realtime Database
+            const imageUrl = await getDownloadURL(imageRef);
+           
+            // Handle user creation success
+            
+            set(ref(database,'users/' + user.uid),{
+                
+                name:name,
+                email:email,
+                gender:gender,
+                date:date,
+                address:address,
+                password:password,
+                check1:check1,
+                person_name:person_name,
+                image: imageUrl
+            })
+            alert('User created: ' + user.email);
+        } catch (error) {
+            // Handle errors
+            alert('Error: ' + error.message);
+        }
+    });
+</script>
+</html>

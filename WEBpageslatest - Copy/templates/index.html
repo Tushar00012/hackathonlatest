@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASBC Bank</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon"  href="{{ url_for('static', filename='images/logo.ico') }}" type="image/x-icon">
+
+   
+</head>
+<body>
+    <div class="heading">
+        <h1>
+            ASBC Bank
+        </h1>
+    </div>
+    <div class="homebar">
+     <ul>
+        <li><a href="/index">Home</a></li>
+        <li><a href="">Accounts</a></li>
+        <li><a href="">Deposits</a></li>
+        <li><a href="">Payments</a></li>
+        <li><a href="">Cards</a></li>
+        <li><a href="">Loans</a></li>
+        <li><a href="">Investments</a></li>
+        <li><a href="">Insurance</a></li>
+        <li><a href="">Special Services</a></li>
+        
+        <li><button><a href="/login2" alt="login">Login</a></button></li>
+     </ul>
+    </div>
+    <div class="image">
+        <img src="{{ url_for('static', filename='images/image.png') }}" alt="image"
+         
+         width="1440px"
+         height="500px"
+        >
+    </div>
+    <div class="secondheading">
+    <h2>Helping You To Meet Your Life Goals</h2>
+    </div>
+    <div class="section">
+    <ul>
+        <li><a href=""><img  src="{{ url_for('static', filename='images/personalloan.jpeg') }}" width="400px"></a></li>
+        <li><a href=""><img  src="{{ url_for('static', filename='images/homeloan.jpeg') }}" width="400px"></a></li>
+        <li><a href=""><img  src="{{ url_for('static', filename='images/savingaccount.jpeg') }}" width="400px"></a></li>
+    </ul>
+    </div>
+    <div class="page">
+        <img  src="{{ url_for('static', filename='images/page.jpeg') }}" width="1200px" height="800px">
+    </div>
+    <br><br><br><br><br>
+    <div>
+    <footer>
+        Copyright &copy; 2023ASBC Bank 
+    </footer>
+    </div>
+    
+  
+</body>
+</html>
